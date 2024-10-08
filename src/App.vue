@@ -2,8 +2,7 @@
   <v-app>
     <v-main>
       <v-container>
-        <h1>Hello World</h1>
-        <v-btn color="primary">Vuetify Button</v-btn>
+        <router-view></router-view>
       </v-container>
     </v-main>
   </v-app>

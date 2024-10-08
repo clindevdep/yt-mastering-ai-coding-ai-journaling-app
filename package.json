@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "vue": "3.3.4",
-    "vuetify": "3.3.15"
+    "vuetify": "3.3.15",
+    "vue-router": "4.2.4",
+    "pinia": "2.1.6"
   },
   "devDependencies": {
     "@vue/cli-service": "~5.0.0",
