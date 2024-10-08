@@ -14,5 +14,8 @@
   "devDependencies": {
     "@vue/cli-service": "~5.0.0",
     "@vue/compiler-sfc": "^3.3.4"
-  }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
