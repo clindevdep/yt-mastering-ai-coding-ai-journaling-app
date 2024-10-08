@@ -13,17 +13,19 @@
 <script>
 import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
-import * as yup from 'yup'
 
 export default {
   name: 'EntryForm',
   setup() {
-    const schema = yup.object({
-      title: yup.string().required('Title is required'),
-    })
-
     const { handleSubmit, errors } = useForm({
-      validationSchema: schema,
+      validationSchema: {
+        title: (value) => {
+          if (!value || value.trim() === '') {
+            return 'Title is required';
+          }
+          return true;
+        }
+      }
     })
 
     const { value: title } = useField('title')
