@@ -32,7 +32,7 @@
     timeout="3000"
     location="top"
   >
-    Entry saved successfully!
+    Entry "{{ savedTitle }}" saved successfully!
   </v-snackbar>
   </div>
 </template>
@@ -69,13 +69,15 @@ export default {
     
     const isSubmitting = ref(false)
     const showSuccess = ref(false)
+    const savedTitle = ref('')
 
     const onSubmit = handleSubmit(async (values) => {
       try {
         isSubmitting.value = true
         const entry = entriesStore.addEntry(values.title, values.content)
-        resetForm()
+        savedTitle.value = values.title
         showSuccess.value = true
+        resetForm()
         return entry
       } catch (error) {
         console.error('Failed to save entry:', error)
@@ -91,7 +93,8 @@ export default {
       errors,
       onSubmit,
       isSubmitting,
-      showSuccess
+      showSuccess,
+      savedTitle
     }
   },
 }
