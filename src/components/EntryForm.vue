@@ -23,6 +23,7 @@
 <script>
 import { ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
+import { useEntriesStore } from '@/stores/entries'
 
 export default {
   name: 'EntryForm',
@@ -47,9 +48,10 @@ export default {
     const { value: title } = useField('title')
     const { value: content } = useField('content')
 
+    const entriesStore = useEntriesStore()
+    
     const onSubmit = handleSubmit((values) => {
-      console.log('Form submitted:', values)
-      // Here you would typically send the data to your API
+      entriesStore.addEntry(values.title, values.content)
     })
 
     return {
