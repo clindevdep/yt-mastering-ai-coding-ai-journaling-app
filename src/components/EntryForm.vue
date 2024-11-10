@@ -95,7 +95,7 @@ export default {
       onSubmit: submitForm,
       isSubmitting,
       showSuccess,
-      savedTitle
+      savedTitle,
     }
   },
 }
