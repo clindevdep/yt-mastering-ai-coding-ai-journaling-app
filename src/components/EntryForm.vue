@@ -92,7 +92,7 @@ export default {
       title,
       content,
       errors,
-      submitForm as onSubmit,
+      onSubmit: submitForm,
       isSubmitting,
       showSuccess,
       savedTitle
