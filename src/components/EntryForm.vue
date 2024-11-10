@@ -1,5 +1,6 @@
 <template>
-  <v-form @submit.prevent="onSubmit" class="d-flex flex-column gap-4">
+  <div>
+    <v-form @submit.prevent="onSubmit" class="d-flex flex-column gap-4">
     <v-text-field
       v-model="title"
       :error-messages="errors.title"
@@ -24,6 +25,16 @@
       </v-btn>
     </div>
   </v-form>
+  
+  <v-snackbar
+    v-model="showSuccess"
+    color="success"
+    timeout="3000"
+    location="top"
+  >
+    Entry saved successfully!
+  </v-snackbar>
+  </div>
 </template>
 
 <script>
@@ -68,13 +79,30 @@ export default {
     })
 
     const isSubmitting = ref(false)
+    const showSuccess = ref(false)
+
+    const onSubmit = handleSubmit(async (values) => {
+      try {
+        isSubmitting.value = true
+        const entry = entriesStore.addEntry(values.title, values.content)
+        resetForm()
+        showSuccess.value = true
+        return entry
+      } catch (error) {
+        console.error('Failed to save entry:', error)
+        throw error
+      } finally {
+        isSubmitting.value = false
+      }
+    })
 
     return {
       title,
       content,
       errors,
       onSubmit,
-      isSubmitting
+      isSubmitting,
+      showSuccess
     }
   },
 }
