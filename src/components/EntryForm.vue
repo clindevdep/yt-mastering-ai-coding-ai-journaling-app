@@ -67,17 +67,6 @@ export default {
 
     const entriesStore = useEntriesStore()
     
-    const onSubmit = handleSubmit(async (values) => {
-      try {
-        const entry = entriesStore.addEntry(values.title, values.content)
-        resetForm()
-        return entry
-      } catch (error) {
-        console.error('Failed to save entry:', error)
-        throw error
-      }
-    })
-
     const isSubmitting = ref(false)
     const showSuccess = ref(false)
 
