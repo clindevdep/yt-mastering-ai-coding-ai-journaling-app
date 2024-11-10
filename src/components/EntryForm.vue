@@ -71,7 +71,8 @@ export default {
     const showSuccess = ref(false)
     const savedTitle = ref('')
 
-    const onSubmit = handleSubmit(async (values) => {
+    // Handle form submission
+    const submitForm = handleSubmit(async (values) => {
       try {
         isSubmitting.value = true
         const entry = entriesStore.addEntry(values.title, values.content)
@@ -91,7 +92,7 @@ export default {
       title,
       content,
       errors,
-      onSubmit,
+      submitForm as onSubmit,
       isSubmitting,
       showSuccess,
       savedTitle
