@@ -15,7 +15,13 @@
       rows="4"
     ></v-textarea>
     <div>
-      <v-btn type="submit" color="primary">Submit</v-btn>
+      <v-btn 
+        type="submit" 
+        color="primary"
+        :loading="isSubmitting"
+      >
+        Submit
+      </v-btn>
     </div>
   </v-form>
 </template>
@@ -28,7 +34,7 @@ import { useEntriesStore } from '@/stores/entries'
 export default {
   name: 'EntryForm',
   setup() {
-    const { handleSubmit, errors } = useForm({
+    const { handleSubmit, errors, resetForm } = useForm({
       validationSchema: {
         title: (value) => {
           if (!value || value.trim() === '') {
@@ -50,15 +56,25 @@ export default {
 
     const entriesStore = useEntriesStore()
     
-    const onSubmit = handleSubmit((values) => {
-      entriesStore.addEntry(values.title, values.content)
+    const onSubmit = handleSubmit(async (values) => {
+      try {
+        const entry = entriesStore.addEntry(values.title, values.content)
+        resetForm()
+        return entry
+      } catch (error) {
+        console.error('Failed to save entry:', error)
+        throw error
+      }
     })
+
+    const isSubmitting = ref(false)
 
     return {
       title,
       content,
       errors,
       onSubmit,
+      isSubmitting
     }
   },
 }
