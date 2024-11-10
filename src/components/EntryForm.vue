@@ -1,12 +1,22 @@
 <template>
-  <v-form @submit.prevent="onSubmit">
+  <v-form @submit.prevent="onSubmit" class="d-flex flex-column gap-4">
     <v-text-field
       v-model="title"
       :error-messages="errors.title"
       label="Entry Title"
       required
     ></v-text-field>
-    <v-btn type="submit" color="primary">Submit</v-btn>
+    <v-textarea
+      v-model="content"
+      :error-messages="errors.content"
+      label="Entry Content"
+      required
+      auto-grow
+      rows="4"
+    ></v-textarea>
+    <div>
+      <v-btn type="submit" color="primary">Submit</v-btn>
+    </div>
   </v-form>
 </template>
 
@@ -24,11 +34,18 @@ export default {
             return 'Title is required';
           }
           return true;
+        },
+        content: (value) => {
+          if (!value || value.trim() === '') {
+            return 'Content is required';
+          }
+          return true;
         }
       }
     })
 
     const { value: title } = useField('title')
+    const { value: content } = useField('content')
 
     const onSubmit = handleSubmit((values) => {
       console.log('Form submitted:', values)
@@ -37,6 +54,7 @@ export default {
 
     return {
       title,
+      content,
       errors,
       onSubmit,
     }
