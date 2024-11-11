@@ -24,6 +24,7 @@ export default {
   setup() {
     const entriesStore = useEntriesStore()
     entriesStore.initializeStore()
+    return {}
   }
 }
 </script>
