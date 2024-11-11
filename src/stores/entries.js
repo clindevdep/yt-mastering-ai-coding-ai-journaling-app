@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { createEntry } from '@/types/Entry'
-import { loadEntries, saveEntries, StorageError } from '@/services/storage'
+import { loadEntries, saveEntries, hasNewerData, StorageError } from '@/services/storage'
 
 /**
  * Store for managing journal entries
@@ -8,7 +8,7 @@ import { loadEntries, saveEntries, StorageError } from '@/services/storage'
 export const useEntriesStore = defineStore('entries', {
   state: () => ({
     /** @type {import('@/types/Entry').Entry[]} */
-    entries: [],
+    entries: Array(),
     error: null,
     lastSyncTimestamp: null
   }),
