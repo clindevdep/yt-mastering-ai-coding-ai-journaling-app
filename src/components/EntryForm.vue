@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import { useEntriesStore } from '@/stores/entries'
 

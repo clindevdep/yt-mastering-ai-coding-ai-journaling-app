@@ -54,7 +54,9 @@ export const useEntriesStore = defineStore('entries', {
      * Sync current state to storage
      */
     async syncToStorage() {
+      if (this.isSaving) return // Prevent concurrent saves
       this.isSaving = true
+      this.error = null // Clear previous errors
       try {
         // Check for newer data in storage
         if (hasNewerData(this.lastSyncTimestamp)) {
