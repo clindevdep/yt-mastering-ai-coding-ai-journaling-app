@@ -5,8 +5,30 @@
       :key="entry.id"
       :title="entry.title"
       :subtitle="formatDate(entry.timestamp)"
+      @click="togglePreview(entry)"
+      :active="selectedEntry?.id === entry.id"
+      class="entry-item"
     >
+      <template v-slot:append>
+        <v-icon>{{ selectedEntry?.id === entry.id ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+      </template>
     </v-list-item>
+    <v-expand-transition>
+      <v-card v-if="selectedEntry" class="mx-4 mb-4">
+        <v-card-text>
+          {{ previewContent }}
+          <v-btn
+            v-if="selectedEntry.content.length > 200"
+            variant="text"
+            color="primary"
+            class="mt-2"
+            @click="showFullContent = !showFullContent"
+          >
+            {{ showFullContent ? 'Show Less' : 'Show More' }}
+          </v-btn>
+        </v-card-text>
+      </v-card>
+    </v-expand-transition>
   </v-list>
   <v-card v-else class="pa-4 text-center">
     <v-card-text>
@@ -16,7 +38,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useEntriesStore } from '@/stores/entries'
 
 const store = useEntriesStore()
@@ -29,6 +51,26 @@ const sortedEntries = computed(() => {
   )
 })
 
+const selectedEntry = ref(null)
+const showFullContent = ref(false)
+
+const previewContent = computed(() => {
+  if (!selectedEntry.value) return ''
+  const content = selectedEntry.value.content
+  if (showFullContent.value) return content
+  return content.length > 200 ? content.slice(0, 200) + '...' : content
+})
+
+function togglePreview(entry) {
+  if (selectedEntry.value?.id === entry.id) {
+    selectedEntry.value = null
+    showFullContent.value = false
+  } else {
+    selectedEntry.value = entry
+    showFullContent.value = false
+  }
+}
+
 function formatDate(timestamp) {
   return new Date(timestamp).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -37,3 +79,10 @@ function formatDate(timestamp) {
   })
 }
 </script>
+
+<style scoped>
+.entry-item:hover {
+  background-color: rgba(var(--v-theme-primary), 0.05);
+  cursor: pointer;
+}
+</style>
