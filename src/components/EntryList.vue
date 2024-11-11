@@ -1,5 +1,5 @@
 <template>
-  <v-list v-if="entries.length > 0">
+  <v-list v-if="entries.length > 0" class="rounded">
     <v-list-item
       v-for="entry in sortedEntries"
       :key="entry.id"
@@ -14,7 +14,7 @@
       </template>
     </v-list-item>
     <v-expand-transition>
-      <v-card v-if="selectedEntry" class="mx-4 mb-4">
+      <v-card v-if="selectedEntry" class="mx-2 mx-sm-4 mb-4">
         <v-card-text>
           {{ previewContent }}
           <v-btn
@@ -81,8 +81,31 @@ function formatDate(timestamp) {
 </script>
 
 <style scoped>
-.entry-item:hover {
-  background-color: rgba(var(--v-theme-primary), 0.05);
-  cursor: pointer;
+.entry-item {
+  min-height: 48px; /* Minimum touch target size */
+}
+
+/* Only show hover effect on devices that support hover */
+@media (hover: hover) {
+  .entry-item:hover {
+    background-color: rgba(var(--v-theme-primary), 0.05);
+    cursor: pointer;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 600px) {
+  .v-list-item__content {
+    padding: 8px 0;
+  }
+  
+  .v-list-item__title {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  
+  .v-list-item__subtitle {
+    font-size: 0.875rem;
+  }
 }
 </style>
