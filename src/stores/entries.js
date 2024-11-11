@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { createEntry } from '@/types/Entry'
+import { loadEntries, saveEntries, StorageError } from '@/services/storage'
 
 /**
  * Store for managing journal entries
@@ -7,7 +8,8 @@ import { createEntry } from '@/types/Entry'
 export const useEntriesStore = defineStore('entries', {
   state: () => ({
     /** @type {import('@/types/Entry').Entry[]} */
-    entries: []
+    entries: [],
+    error: null
   }),
 
   getters: {
@@ -29,9 +31,37 @@ export const useEntriesStore = defineStore('entries', {
      * @param {string} content - Entry content
      * @returns {import('@/types/Entry').Entry} The created entry
      */
+    /**
+     * Initialize store by loading entries from storage
+     */
+    initializeStore() {
+      try {
+        this.entries = loadEntries()
+        this.error = null
+      } catch (error) {
+        console.error('Failed to load entries:', error)
+        this.error = error.message
+      }
+    },
+
+    /**
+     * Add a new entry to the store and persist to storage
+     * @param {string} title - Entry title
+     * @param {string} content - Entry content
+     * @returns {import('@/types/Entry').Entry} The created entry
+     */
     addEntry(title, content) {
       const entry = createEntry(title, content)
       this.entries.push(entry)
+      
+      try {
+        saveEntries(this.entries)
+        this.error = null
+      } catch (error) {
+        console.error('Failed to save entry:', error)
+        this.error = error.message
+      }
+
       return entry
     }
   }
