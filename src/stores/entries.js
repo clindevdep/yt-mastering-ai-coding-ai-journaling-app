@@ -10,7 +10,8 @@ export const useEntriesStore = defineStore('entries', {
     /** @type {import('@/types/Entry').Entry[]} */
     entries: [],
     error: null,
-    lastSyncTimestamp: null
+    lastSyncTimestamp: null,
+    quotaWarning: false
   }),
 
   getters: {
@@ -60,11 +61,21 @@ export const useEntriesStore = defineStore('entries', {
           this.entries = this.mergeEntries(this.entries, storedEntries)
         }
         
+        // Check if we're approaching storage limit
+        const requiredSpace = calculateRequiredSpace(this.entries);
+        this.quotaWarning = isQuotaNearLimit(requiredSpace);
+        
         saveEntries(this.entries)
         this.error = null
       } catch (error) {
         console.error('Failed to sync entries:', error)
         this.error = error.message
+        
+        // If quota exceeded, ensure we keep existing data
+        if (error.message.includes('quota exceeded')) {
+          const { entries: storedEntries } = loadEntries()
+          this.entries = storedEntries
+        }
       }
     },
 
