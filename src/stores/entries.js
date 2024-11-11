@@ -8,7 +8,7 @@ import { loadEntries, saveEntries, hasNewerData, StorageError } from '@/services
 export const useEntriesStore = defineStore('entries', {
   state: () => ({
     /** @type {import('@/types/Entry').Entry[]} */
-    entries: Array(),
+    entries: [],
     error: null,
     lastSyncTimestamp: null
   }),
@@ -32,7 +32,7 @@ export const useEntriesStore = defineStore('entries', {
     initializeStore() {
       try {
         const { entries, timestamp } = loadEntries()
-        this.entries = entries
+        this.entries = Array.isArray(entries) ? [...entries] : []
         this.lastSyncTimestamp = timestamp
         this.error = null
         
