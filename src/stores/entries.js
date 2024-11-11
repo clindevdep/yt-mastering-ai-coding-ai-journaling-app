@@ -6,12 +6,15 @@ import { loadEntries, saveEntries, hasNewerData, StorageError } from '@/services
  * Store for managing journal entries
  */
 export const useEntriesStore = defineStore('entries', {
-  state: () => ({
+  state: () => {
     /** @type {import('@/types/Entry').Entry[]} */
-    entries: [],
-    error: null,
-    lastSyncTimestamp: null
-  }),
+    const state = {
+      entries: [],
+      error: null,
+      lastSyncTimestamp: null
+    }
+    return state
+  },
 
   getters: {
     /**
