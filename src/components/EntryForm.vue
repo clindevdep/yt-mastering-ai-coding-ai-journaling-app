@@ -1,6 +1,11 @@
 <template>
   <div>
     <v-form @submit.prevent="onSubmit" class="d-flex flex-column gap-4">
+      <v-progress-linear
+        v-if="isSaving"
+        indeterminate
+        color="primary"
+      ></v-progress-linear>
     <v-text-field
       v-model="title"
       :error-messages="errors.title"
@@ -33,6 +38,15 @@
     location="top"
   >
     Entry "{{ savedTitle }}" saved successfully!
+  </v-snackbar>
+
+  <v-snackbar
+    v-model="showError"
+    color="error"
+    timeout="5000"
+    location="top"
+  >
+    {{ errorMessage }}
   </v-snackbar>
   </div>
 </template>
@@ -69,12 +83,18 @@ export default {
     
     const isSubmitting = ref(false)
     const showSuccess = ref(false)
+    const showError = ref(false)
     const savedTitle = ref('')
+    const errorMessage = ref('')
+
+    // Get save status from store
+    const isSaving = computed(() => entriesStore.isSaving)
 
     // Handle form submission
     const submitForm = handleSubmit(async (values) => {
       try {
         isSubmitting.value = true
+        showError.value = false
         const entry = entriesStore.addEntry(values.title, values.content)
         savedTitle.value = values.title
         showSuccess.value = true
@@ -82,6 +102,8 @@ export default {
         return entry
       } catch (error) {
         console.error('Failed to save entry:', error)
+        errorMessage.value = error.message || 'Failed to save entry'
+        showError.value = true
         throw error
       } finally {
         isSubmitting.value = false
@@ -94,8 +116,11 @@ export default {
       errors,
       onSubmit: submitForm,
       isSubmitting,
+      isSaving,
       showSuccess,
+      showError,
       savedTitle,
+      errorMessage
     }
   },
 }

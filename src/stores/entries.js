@@ -11,7 +11,8 @@ export const useEntriesStore = defineStore('entries', {
     entries: [],
     error: null,
     lastSyncTimestamp: null,
-    quotaWarning: false
+    quotaWarning: false,
+    isSaving: false
   }),
 
   getters: {
@@ -52,7 +53,8 @@ export const useEntriesStore = defineStore('entries', {
     /**
      * Sync current state to storage
      */
-    syncToStorage() {
+    async syncToStorage() {
+      this.isSaving = true
       try {
         // Check for newer data in storage
         if (hasNewerData(this.lastSyncTimestamp)) {
@@ -65,7 +67,7 @@ export const useEntriesStore = defineStore('entries', {
         const requiredSpace = calculateRequiredSpace(this.entries);
         this.quotaWarning = isQuotaNearLimit(requiredSpace);
         
-        saveEntries(this.entries)
+        await saveEntries(this.entries)
         this.error = null
       } catch (error) {
         console.error('Failed to sync entries:', error)
@@ -76,6 +78,9 @@ export const useEntriesStore = defineStore('entries', {
           const { entries: storedEntries } = loadEntries()
           this.entries = storedEntries
         }
+        throw error
+      } finally {
+        this.isSaving = false
       }
     },
 
