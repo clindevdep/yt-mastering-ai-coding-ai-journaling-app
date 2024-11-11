@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { createEntry } from '@/types/Entry'
-import { loadEntries, saveEntries, hasNewerData, StorageError } from '@/services/storage'
+import { loadEntries, saveEntries, hasNewerData, StorageError, calculateRequiredSpace, isQuotaNearLimit } from '@/services/storage'
 
 /**
  * Store for managing journal entries
