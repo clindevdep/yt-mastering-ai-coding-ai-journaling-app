@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { useEntriesStore } from './stores/entries'
 import { createVuetify } from 'vuetify'
 import 'vuetify/styles'
 import * as components from 'vuetify/components'
@@ -13,5 +14,12 @@ const vuetify = createVuetify({
 })
 
 const pinia = createPinia()
+const app = createApp(App)
 
-createApp(App).use(vuetify).use(router).use(pinia).mount('#app')
+app.use(vuetify).use(router).use(pinia)
+
+// Initialize the entries store
+const entriesStore = useEntriesStore(pinia)
+entriesStore.initializeStore()
+
+app.mount('#app')
