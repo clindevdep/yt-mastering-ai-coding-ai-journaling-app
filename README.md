@@ -24,13 +24,20 @@ https://www.youtube.com/playlist?list=PLk7JCUQLwRrMBCxQRKNTVslHyro_CbT5b
 
 ## Core Technologies
 
-- Vue.js 3: Progressive JavaScript framework
-- Vuetify 3: Material Design Component Framework
-- Vue Router: Official routing library
-- Pinia: State management library
-- VeeValidate: Form validation
-- Axios: HTTP client
+- Vue.js 3.4.26: Progressive JavaScript framework
+- Vuetify 3.3.15: Material Design Component Framework
+- Vue Router 4.2.4: Official routing library
+- Pinia 2.1.6: State management library
+- VeeValidate 4.11.6: Form validation
+- Axios 1.5.0: HTTP client
+- Sass 1.32.7: CSS preprocessor
 - LocalStorage: Persistent data storage
+
+## Available Scripts
+
+- `serve`: Run development server
+- `build`: Create production build
+- `lint`: Run linter to check code quality
 
 ## Core Components
 
@@ -60,13 +67,19 @@ Currently in active development, implementing core journaling and entry manageme
 ### Development Server
 
 ```bash
-npm run dev
+npm run serve
 ```
 
 ### Production Build
 
 ```bash
 npm run build
+```
+
+### Linting
+
+```bash
+npm run lint
 ```
 
 ## Contributing
