@@ -1,77 +1,78 @@
-# Project Name
+# AI-Powered Brainstorming and Journaling App
 
 ## Project Overview
 
-This project is a web application built using Vue.js and other modern web technologies. It provides a user interface for entering and managing data, with features including a home page, an about page, and a counter functionality.
+This is an AI-powered brainstorming and journaling web application built as part of the "Coding the Future With AI" YouTube series. The app provides users with a powerful, intuitive platform for creating, managing, and exploring journal entries with AI-assisted features.
+
+## YouTube Series
+Watch the development process in the full playlist: 
+https://www.youtube.com/playlist?list=PLk7JCUQLwRrMBCxQRKNTVslHyro_CbT5b
+
+## Current Features (Sprint 2)
+
+- Create and save journal entries
+- Local storage persistence between sessions
+- View a list of all journal entries
+- Basic entry management functionality
+
+## Planned Features (Future Sprints)
+
+- AI-powered entry summarization
+- Intelligent tag suggestions
+- Entry analytics
+- Advanced search capabilities
 
 ## Core Technologies
 
-- Vue.js 3: A progressive JavaScript framework for building user interfaces
-- Vue Router: Official router for Vue.js applications
-- Pinia: State management library for Vue.js
-- Node.js: JavaScript runtime for the backend
-- npm: Package manager for JavaScript
+- Vue.js 3: Progressive JavaScript framework
+- Vuetify 3: Material Design Component Framework
+- Vue Router: Official routing library
+- Pinia: State management library
+- VeeValidate: Form validation
+- Axios: HTTP client
+- LocalStorage: Persistent data storage
 
-## Core Components and Their Relationships
+## Core Components
 
-1. **App.vue**: The main component that serves as the application shell.
-2. **EntryForm.vue**: A component for user data input.
-3. **Home.vue**: The home page view component.
-4. **About.vue**: The about page view component.
-5. **Router**: Manages navigation between different views.
-6. **Pinia Store**: Handles state management across the application.
+1. **EntryForm.vue**: Allows users to create new journal entries
+2. **EntryList.vue**: Displays a list of all journal entries
+3. **Entries Store**: Manages journal entry state and local storage synchronization
 
-The `App.vue` component serves as the main container, while `Router` determines which view (`Home.vue` or `About.vue`) to display. The `EntryForm.vue` component is likely used within one of these views for data input. The Pinia store (in `stores/counter.js`) manages the application state that can be accessed by any component.
+## Project Status
+
+Currently in active development, implementing core journaling and entry management features with a focus on user experience and AI integration.
 
 ## Building and Running the Project
 
 ### Prerequisites
 
-- Node.js (LTS version recommended)
-- npm (comes with Node.js)
+- Node.js (LTS version)
+- npm
 
 ### Installation
 
-1. Clone the repository:
-   ```
-   git clone [repository-url]
-   cd [project-directory]
-   ```
-
+1. Clone the repository
 2. Install dependencies:
-   ```
+   ```bash
    npm install
    ```
 
-### Running the Development Server
+### Development Server
 
-To start the development server:
-
-```
+```bash
 npm run dev
 ```
 
-This will start the development server, typically at `http://localhost:5173` (or another available port).
+### Production Build
 
-### Building for Production
-
-To create a production build:
-
-```
+```bash
 npm run build
 ```
 
-This will generate a `dist` folder with the compiled and minified assets ready for deployment.
-
-### Additional Commands
-
-- Linting: `npm run lint`
-- Running tests (if configured): `npm run test`
-
 ## Contributing
 
-Please read the CONTRIBUTING.md file (if available) for details on our code of conduct and the process for submitting pull requests.
+Contributions are welcome! Please follow the project's coding standards and submit pull requests for review.
 
 ## License
 
-This project is licensed under the terms found in the LICENSE file in the root directory of this project.
+See the LICENSE file for licensing information.
