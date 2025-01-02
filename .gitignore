@@ -44,3 +44,5 @@ Thumbs.db
 
 # Vue.js specific
 *.local
+
+.codegpt
